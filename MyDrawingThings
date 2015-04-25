@@ -1,0 +1,200 @@
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.view.View;
+
+/**
+ * Created by Kevin on 4/10/2015.
+ */
+public class DrawingThings extends View {
+    int elapsedTime = 0;
+    Bitmap human1;
+    Bitmap zombie1;
+    Bitmap zombie2;
+    Bitmap zombie3;
+    Bitmap zombie4;
+    float hx;
+    float hy;
+    float hxo;
+    float hyo;
+    float hx2;
+    float hy2;
+    int hspeed;
+    Rect hhitbox;
+    float zx;
+    float zy;
+    float zxo;
+    float zyo;
+    float zx2;
+    float zy2;
+    int zspeed;
+    Rect zhitbox;
+
+    public DrawingThings(Context context) {
+        super(context);
+
+        human1 = BitmapFactory.decodeResource(getResources(),R.drawable.human);
+        zombie1 = BitmapFactory.decodeResource(getResources(),R.drawable.human);
+        zombie2 = BitmapFactory.decodeResource(getResources(),R.drawable.human);
+        zombie3 = BitmapFactory.decodeResource(getResources(),R.drawable.human);
+        zombie4 = BitmapFactory.decodeResource(getResources(),R.drawable.human);
+        hx = 0;
+        hy = 0;
+    }
+    @Override
+    protected void onDraw(Canvas canvas){
+        super.onDraw(canvas);
+        hxo = hx;
+        hyo = hy;
+
+        //x2 value will come from gamepad
+        //y2 value will come from gamepad
+
+
+        if (hx2==hx&&hy2==hy){
+        } else if (hx2<hx&&hy2==hy){
+            hx = hx-(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 1;
+        } else if (hx2>hx&&hy2==hy){
+            hx = hx+(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 0;
+        } else if (hx2==hx&&hy2<hy){
+            hy = hy-(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 2;
+        } else if (hx2==hx&&hy2>hy){
+            hy = hy+(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 3;
+        } else if (hx2<hx&&hy2<hy){
+            hx = hx-(hspeed*elapsedTime);
+            hy = hy-(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 1;
+        } else if (hx2>hx&&hy2<hy){
+            hx = hx+(hspeed*elapsedTime);
+            hy = hy-(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 0;
+        } else if (hx2<hx&&hy2>hy){
+            hx = hx-(hspeed*elapsedTime);
+            hy = hy+(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 1;
+        } else if (hx2>hx&&hy2>hy){
+            hx = hx+(hspeed*elapsedTime);
+            hy = hy+(hspeed*elapsedTime);
+            hhitbox.offsetTo((int)hx,(int)hy);
+            //facing = 0;
+        }
+        canvas.drawColor(Color.WHITE);
+
+        //this is where the human is being drawn
+        canvas.drawBitmap(human1,hx,hy,new Paint());
+
+        //this is where the zombies are being drawn
+        //manipulation of x and y values to be used by canvas.drawBitmap method
+        zx2 = hx;
+        zy2 = hy;
+        zxo = zx;
+        zyo = zy;
+        if (zx2==zx&&zy2==zy){
+        } else if (zx2<zx&&zy2==zy){
+            zx = zx-(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 1;
+        } else if (zx2>zx&&zy2==zy){
+            zx = zx+(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 0;
+        } else if (zx2==zx&&zy2<zy){
+            zy = zy-(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 2;
+        } else if (zx2==zx&&zy2>zy){
+            zy = zy+(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 3;
+        } else if (zx2<zx&&zy2<zy){
+            zx = zx-(zspeed*elapsedTime);
+            zy = zy-(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 1;
+        } else if (zx2>zx&&zy2<zy){
+            zx = zx+(zspeed*elapsedTime);
+            zy = zy-(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 0;
+        } else if (zx2<zx&&zy2>zy){
+            zx = zx-(zspeed*elapsedTime);
+            zy = zy+(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 1;
+        } else if (zx2>zx&&zy2>zy){
+            zx = zx+(zspeed*elapsedTime);
+            zy = zy+(zspeed*elapsedTime);
+            zhitbox.offsetTo((int)zx,(int)zy);
+            //facing = 0;
+        }
+
+        canvas.drawBitmap(zombie1,canvas.getWidth()/2, canvas.getHeight()/2,new Paint());
+        /*canvas.drawBitmap(zombie2,0,canvas.getHeight()-100,new Paint());
+        canvas.drawBitmap(zombie3,canvas.getWidth()-50,0,new Paint());
+        canvas.drawBitmap(zombie4,canvas.getWidth()-50,canvas.getHeight()-100,new Paint());
+        */
+
+        //drawing of the first barrier
+        Rect r1 = new Rect(50, 50, 50, 50);
+        r1.set(0, 0, canvas.getWidth(), canvas.getHeight() / 2);
+
+        Paint p1 = new Paint();
+        p1.setColor(Color.BLUE);
+        p1.setStyle(Paint.Style.FILL);
+
+        canvas.drawRect(r1, p1);
+
+        //drawing of the second barrier
+        Rect r2 = new Rect(70, 30, 20, 80);
+        r1.set(0, 0, canvas.getWidth(), canvas.getHeight() / 2);
+
+        Paint p2 = new Paint();
+        p2.setColor(Color.BLACK);
+        p2.setStyle(Paint.Style.FILL);
+
+        canvas.drawRect(r2, p2);
+
+        //drawing of the third barrier
+        Rect r3 = new Rect(20, 20, 90, 10);
+        r1.set(0, 0, canvas.getWidth(), canvas.getHeight() / 2);
+
+        Paint p3 = new Paint();
+        p3.setColor(Color.RED);
+        p3.setStyle(Paint.Style.FILL);
+
+        canvas.drawRect(r3, p3);
+
+
+        //drawing of the fourth barrier
+        Rect r4 = new Rect(40, 16, 65, 100);
+        r1.set(0, 0, canvas.getWidth(), canvas.getHeight() / 2);
+
+        Paint p4 = new Paint();
+        p4.setColor(Color.RED);
+        p4.setStyle(Paint.Style.FILL);
+
+        canvas.drawRect(r4, p4);
+
+        elapsedTime++;
+        //canvas.drawBitmap(human1,canvas.getWidth()/2,canvas.getHeight()/2, new Paint());
+        invalidate();
+    }
+
+
+}
+
